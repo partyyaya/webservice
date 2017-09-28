@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/hot-sneaks/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <link rel="shortcut icon" href="img/logo2.png">
 <title>地震查詢</title>
 <style>
@@ -70,10 +73,26 @@ function showTime(){
 		window.setTimeout(showTime,1000);
 }
 
-function inquire(e){
-	var name = e.value;
-	window.location.replace("getData.jsp?name="+name);
+function inquire(){
+	var timebegin = document.getElementById("timebegin").value;
+	var timeend = document.getElementById("timeend").value;
+	window.location.replace("getData.jsp?timebegin="+timebegin+"&timeend="+timeend);
 }
+
+$(document).ready(function(){ 
+    var opt={dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+             dayNamesMin:["日","一","二","三","四","五","六"],
+             monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+             monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+             prevText:"上月",
+             nextText:"次月",
+             weekHeader:"週",
+             showMonthAfterYear:true,
+             dateFormat:"yy-mm-dd"
+             };
+    $("#timebegin").datepicker(opt);
+    $("#timeend").datepicker(opt);
+    });
 </script>
 </head>
 <body onLoad="showTime()">
@@ -87,10 +106,19 @@ int much=1;
 	String authority=(String)session.getAttribute("authority");
 	int author=Integer.parseInt(authority);
 	
-	String name=(String)request.getParameter("name");	
-	System.out.println(name);	
-	LinkedList<quakedata> list = getearthData.timeGetData("2017/9/15","2017/9/30");
-	
+	String timebegin=(String)request.getParameter("timebegin");
+	String timeend=(String)request.getParameter("timeend");
+	LinkedList<quakedata> list = null;
+	if(timebegin == null || timeend==null){
+		list = getearthData.timeGetData("2017/9/15","2017/9/30");
+	}else if(timebegin != null && timeend!=null){		
+		timebegin = timebegin.replaceAll("-","/");
+		timeend = timeend.replaceAll("-","/");
+		timebegin = timebegin.substring(0,5)+Integer.parseInt(timebegin.substring(5,7))+"/"+Integer.parseInt(timebegin.substring(8,10));
+		timeend = timeend.substring(0,5)+Integer.parseInt(timeend.substring(5,7))+"/"+Integer.parseInt(timeend.substring(8,10));
+		System.out.println(timebegin+"."+timeend);
+		list = getearthData.timeGetData(timebegin,timeend);
+	}
 %>
 <div class="container-filed">
 	<div class="row">
@@ -119,7 +147,9 @@ int much=1;
         	
             <div class="col-xs-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
             	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢</div><br/><br/>
-				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢時間:<input type="text" placeholder="請輸入開始時間" onchange="inquire(this)"/></div>   		
+				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢:<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="請輸入開始日期"/> ~ <input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="請輸入結束日期"/>
+				<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢</button>
+				</div>   		
 				
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'60%'},100); 
