@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,java.sql.*,java.io.*" %>
+<%@page import="tw.service.*" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -69,13 +70,6 @@ function showTime(){
 		window.setTimeout(showTime,1000);
 }
 
-function del(btn,i){	
-	$.get("delgiftByAjax?ID="+i,function(data,status){					
-	});
-	var row = btn.parentNode.parentNode;
-	row.parentNode.removeChild(row);
-}
-
 function inquire(e){
 	var name = e.value;
 	window.location.replace("getData.jsp?name="+name);
@@ -85,6 +79,7 @@ function inquire(e){
 <body onLoad="showTime()">
 <div class="loading"></div>
 <%
+int much=1;	
 	String user=(String)session.getAttribute("user");
 	if(user==null){
 		request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -93,22 +88,9 @@ function inquire(e){
 	int author=Integer.parseInt(authority);
 	
 	String name=(String)request.getParameter("name");	
-	System.out.println(name);
-	String where = name ==null?"":("WHERE Name LIKE '%"+name+"%'");	
+	System.out.println(name);	
+	LinkedList<quakedata> list = getearthData.timeGetData("2017/9/15","2017/9/30");
 	
-	Properties prop = new Properties();
-	prop.setProperty("user", "root");
-	prop.setProperty("password", "root");
-	int i=1;
-	String sql = "SELECT * FROM data "+where;
-		 
-	System.out.println(sql);
-	
-	try {			
-		Class.forName("com.mysql.jdbc.Driver");		
-	} catch (Exception e) {
-		System.out.println(e);
-	}		
 %>
 <div class="container-filed">
 	<div class="row">
@@ -136,16 +118,8 @@ function inquire(e){
 			</script> 
         	
             <div class="col-xs-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
-            <%
-            try (
-            		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/earthquake",prop);
-            		PreparedStatement pstmt=conn.prepareStatement(sql);				
-            		)
-            	{	
-            		ResultSet rs = pstmt.executeQuery();
-            	%> 
-            	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">商品管理</div><br/><br/>
-				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢商品名稱:<input type="text" placeholder="請輸入查詢名稱" onchange="inquire(this)"/></div>   		
+            	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢</div><br/><br/>
+				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢時間:<input type="text" placeholder="請輸入開始時間" onchange="inquire(this)"/></div>   		
 				
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'60%'},100); 
@@ -156,30 +130,29 @@ function inquire(e){
 				      <tr>
 				         <th>編號</th>
 				         <th>時間</th>
-				         <th>經度</th>
-				         <th>緯度</th>
+				         <%if(author>=1){%><th>經度</th><%} %>
+				         <%if(author>=1){%><th>緯度</th><%} %>
 				         <th>規模</th>
 				         <th>深度</th>
 				         <th>地址</th>				         
-				         <%if(author>=1){%><th>刪除</th><%} %>
 				      </tr>
 				    </thead>
 				    <tbody>
 				    <%
-					while(rs.next()) { 					
+				    for(int i=0;i<=list.size()-1;i++) {					
 				    %>
 				      <tr>			      
-				         <td><input type="text"  value="<%=rs.getString("Name") %>" readonly/></td>
-				         <td><input type="text"  value="<%=rs.getString("ProduceOrg") %>" readonly/></td>
-				         <td><input type="text"  value="<%=rs.getString("Price") %>" readonly/></td>
-				         <td><input type="text"  value="<%=rs.getString("ContactTel") %>" readonly/></td>
-				         <%if(author>=1){%><td><button type="button" class="btn btn-danger" id="delete" onClick="del(this,'<%=rs.getString("ID")%>')">刪除</button></td><%} %>
+				         <td><%=list.get(i).getNumber()%></td>
+				         <td><%=list.get(i).getDate()%></td>
+				         <%if(author>=1){%><td><%=list.get(i).getLon() %></td><%} %>
+				         <%if(author>=1){%><td><%=list.get(i).getLat()%></td><%} %>
+				         <td><%=list.get(i).getScale()%></td>
+				         <td><%=list.get(i).getDepth()%></td>
+				         <td><%=list.get(i).getPosition()%></td>
 				      </tr>
 					  <% 
-				      }
-				   }catch (Exception e){
-		           		System.out.println(e);
-		           }
+					  much++;
+				      }			
 			           %>
 		           </tbody>
 				</table>
@@ -187,8 +160,7 @@ function inquire(e){
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'80%'},100); 
 			</script>
-				
-				<div style="font-size:10px;font-weight:bold;text-align:center;">總共符合:<%=i-1%>筆資料</div>
+			<div style="font-size:10px;font-weight:bold;text-align:center;">總共符合:<%=much-1%>筆資料</div>
         	</div>
         </div>
 	</div>

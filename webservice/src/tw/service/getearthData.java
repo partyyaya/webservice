@@ -9,9 +9,10 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class getearthData {
-	public static void main(String[] args) {
-		getearthData.timeGetData("2016/1/16","2017/8/20");
-	}
+//	public static void main(String[] args) {
+//		LinkedList<quakedata> list = getearthData.positionGetData("宜蘭",getearthData.timeGetData("2016/1/16","2017/8/20"));
+//		System.out.println(list.get(0).getPosition());
+//	}
 	
 	public static LinkedList<quakedata> timeGetData(String date,String todate){
 		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
@@ -85,87 +86,55 @@ public class getearthData {
 	}
 
 	public static LinkedList<quakedata> scaleGetData(String scale,String toscale,LinkedList<quakedata> list){
-		try {			
-			Class.forName("com.mysql.jdbc.Driver");		
-		} catch (Exception e) {
-			System.out.println(e);
-		}	
-		Properties prop = new Properties();
-		prop.setProperty("user", "root");
-		prop.setProperty("password", "root");
-		
-		String sql = "SELECT * FROM data where scale like ?";
-		
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/earthquake?useUnicode=true&characterEncoding=UTF-8",prop);
-			PreparedStatement pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1,scale+"%");
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				quakedata data = new quakedata();
-				data.setNumber(rs.getString("number"));
-				data.setDate(rs.getString("date"));
-				data.setLon(rs.getString("lon"));
-				data.setLat(rs.getString("lat"));
-				data.setScale(rs.getString("scale"));
-				data.setDepth(rs.getString("depth"));
-				data.setPosition(rs.getString("position"));
-				list.add(data);
+		LinkedList<quakedata> list2 = new LinkedList<>();
+		for(int i=0;i<=list.size()-1;i++) {
+			if(Float.parseFloat(list.get(i).getScale())>=Float.parseFloat(scale) && Float.parseFloat(list.get(i).getScale())<=Float.parseFloat(toscale)) {
+				list2.add(list.get(i));
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(list.get(0).getScale());
-		return list;
-	}
-
-	public static LinkedList<quakedata> positionGetData(String position,String year){
-		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
-		try {			
-			Class.forName("com.mysql.jdbc.Driver");		
-		} catch (Exception e) {
-			System.out.println(e);
-		}	
-		Properties prop = new Properties();
-		prop.setProperty("user", "root");
-		prop.setProperty("password", "root");
-		
-		String sql = "SELECT * FROM data where position like ? and date like ?";
-		
-		Connection conn;
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/earthquake?useUnicode=true&characterEncoding=UTF-8",prop);
-			PreparedStatement pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1,"%"+position+"%");
-			pstmt.setString(2,year+"%");
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				quakedata data = new quakedata();
-				data.setNumber(rs.getString("number"));
-				data.setDate(rs.getString("date"));
-				data.setLon(rs.getString("lon"));
-				data.setLat(rs.getString("lat"));
-				data.setScale(rs.getString("scale"));
-				data.setDepth(rs.getString("depth"));
-				data.setPosition(rs.getString("position"));
-				list.add(data);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(list.get(0).getDate()+","+list.get(0).getScale());
-		return list;
+		}		
+		return list2;
 	}
 	
-	public static LinkedList<quakedata> GetData(String... param ){
-		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
-		
-		return list;
+	public static LinkedList<quakedata> depthGetData(String depth,String todepth,LinkedList<quakedata> list){
+		LinkedList<quakedata> list2 = new LinkedList<>();
+		for(int i=0;i<=list.size()-1;i++) {
+			if(Float.parseFloat(list.get(i).getDepth())>=Float.parseFloat(depth) && Float.parseFloat(list.get(i).getDepth())<=Float.parseFloat(todepth)) {
+				list2.add(list.get(i));
+			}
+		}		
+		return list2;
+	}
+	
+	public static LinkedList<quakedata> latGetData(String lat,String tolat,LinkedList<quakedata> list){
+		LinkedList<quakedata> list2 = new LinkedList<>();
+		for(int i=0;i<=list.size()-1;i++) {
+			if(Float.parseFloat(list.get(i).getLat())>=Float.parseFloat(lat) && Float.parseFloat(list.get(i).getLat())<=Float.parseFloat(tolat)) {
+				list2.add(list.get(i));
+			}
+		}		
+		return list2;
+	}
+	
+	public static LinkedList<quakedata> lonGetData(String lon,String tolon,LinkedList<quakedata> list){
+		LinkedList<quakedata> list2 = new LinkedList<>();
+		for(int i=0;i<=list.size()-1;i++) {
+			if(Float.parseFloat(list.get(i).getLon())>=Float.parseFloat(lon) && Float.parseFloat(list.get(i).getLon())<=Float.parseFloat(tolon)) {
+				list2.add(list.get(i));
+			}
+		}		
+		return list2;
 	}
 
+	public static LinkedList<quakedata> positionGetData(String position,LinkedList<quakedata> list){
+		LinkedList<quakedata> list2 = new LinkedList<>();//使用list存放資料
+		for(int i=0;i<=list.size()-1;i++) {
+			if(list.get(i).getPosition().contains(position)) {
+				list2.add(list.get(i));
+			}
+		}
+		return list2;
+	}
+	
 	private static String getday(int year,int month) {
 		String day = null;
 		switch(month) {
