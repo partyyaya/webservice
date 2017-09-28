@@ -53,7 +53,7 @@ public class loginMember extends HttpServlet {
 					//將名稱傳回主頁
 					session.setAttribute("user", user);
 					session.setAttribute("authority", rs.getString("authority"));
-					request.getRequestDispatcher("member.jsp").forward(request, response);
+					request.getRequestDispatcher("getData.jsp").forward(request, response);
 				}else {
 					out.println("<script type=\"text/javascript\">");
 					out.println("alert('帳號或密碼輸入錯誤,請重新輸入');");
