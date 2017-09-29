@@ -74,9 +74,32 @@ function showTime(){
 }
 
 function inquire(){
+	var spanNode = document.getElementById("ckId");
+	var t,s,d,lo,la,po;
 	var timebegin = document.getElementById("timebegin").value;
 	var timeend = document.getElementById("timeend").value;
-	window.location.replace("getData.jsp?timebegin="+timebegin+"&timeend="+timeend);
+	if(timebegin!="" && timeend!=""){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var scalebegin = document.getElementById("scalebegin").value;
+	var scaleend = document.getElementById("scaleend").value;
+	if(scalebegin!="" && scaleend!=""){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var depthbegin = document.getElementById("depthbegin").value;
+	var depthend = document.getElementById("depthend").value;
+	if(depthbegin!="" && depthend!=""){d="depthbegin="+depthbegin+"&depthend="+depthend+"&"}else{d="";if(depthbegin=="" && depthend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var lonbegin = document.getElementById("lonbegin").value;
+	var lonend = document.getElementById("lonend").value;
+	if(lonbegin!="" && lonend!=""){lo="lonbegin="+lonbegin+"&lonend="+lonend+"&"}else{lo="";if(lonbegin=="" && lonend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var latbegin = document.getElementById("latbegin").value;
+	var latend = document.getElementById("latend").value;
+	if(latbegin!="" && latend!=""){la="latbegin="+latbegin+"&latend="+latend+"&"}else{la="";if(latbegin=="" && latend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var position = document.getElementById("position").value;
+	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	window.location.replace("getData.jsp?"+t+s+d+lo+la+po);
 }
 
 $(document).ready(function(){ 
@@ -108,17 +131,37 @@ int much=1;
 	
 	String timebegin=(String)request.getParameter("timebegin");
 	String timeend=(String)request.getParameter("timeend");
+	String scalebegin=(String)request.getParameter("scalebegin");
+	String scaleend=(String)request.getParameter("scaleend");
+	String depthbegin=(String)request.getParameter("depthbegin");
+	String depthend=(String)request.getParameter("depthend");
+	String lonbegin=(String)request.getParameter("lonbegin");
+	String lonend=(String)request.getParameter("lonend");
+	String latbegin=(String)request.getParameter("latbegin");
+	String latend=(String)request.getParameter("latend");
+	String position=(String)request.getParameter("position");
+	
 	LinkedList<quakedata> list = null;
 	if(timebegin == null || timeend==null){
 		list = getearthData.timeGetData("2017/9/15","2017/9/30");
 	}else if(timebegin != null && timeend!=null){		
-		timebegin = timebegin.replaceAll("-","/");
-		timeend = timeend.replaceAll("-","/");
-		timebegin = timebegin.substring(0,5)+Integer.parseInt(timebegin.substring(5,7))+"/"+Integer.parseInt(timebegin.substring(8,10));
-		timeend = timeend.substring(0,5)+Integer.parseInt(timeend.substring(5,7))+"/"+Integer.parseInt(timeend.substring(8,10));
+		String[] timebegins = timebegin.split("-");
+		String[] timeends = timeend.split("-");
+		timebegin = timebegins[0]+"/"+Integer.parseInt(timebegins[1])+"/"+Integer.parseInt(timebegins[2]);
+		timeend =timeends[0]+"/"+Integer.parseInt(timeends[1])+"/"+Integer.parseInt(timeends[2]);		
 		System.out.println(timebegin+"."+timeend);
 		list = getearthData.timeGetData(timebegin,timeend);
 	}
+	
+	if(scalebegin != null && scaleend!=null || depthbegin != null && depthend!=null || lonbegin != null && lonend!=null || latbegin != null && latend!=null || position != null){
+		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995/1/1","2017/9/30");}
+		if(scalebegin != null && scaleend!=null){list = getearthData.scaleGetData(scalebegin,scaleend,list);}
+		if(depthbegin != null && depthend!=null){list = getearthData.depthGetData(depthbegin,depthend,list);}
+		if(lonbegin != null && lonend!=null){list = getearthData.lonGetData(lonbegin,lonend,list);}
+		if(latbegin != null && latend!=null){list = getearthData.latGetData(latbegin,latend,list);}
+		if(position != null){list = getearthData.positionGetData(position,list);}
+	}
+	
 %>
 <div class="container-filed">
 	<div class="row">
@@ -146,9 +189,22 @@ int much=1;
 			</script> 
         	
             <div class="col-xs-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
-            	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢</div><br/><br/>
-				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢:<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="請輸入開始日期"/> ~ <input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="請輸入結束日期"/>
-				<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢</button>
+            	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢
+            	<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢</button>
+            	<span id="ckId"></span>
+            	</div><br/><br/>
+				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">
+				<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="開始日期"/> ~ 
+				<input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="結束日期"/>
+				<input id="scalebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="規模(小)"/> ~ 
+				<input id="scaleend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="規模(大)"/>
+				<input id="depthbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="深度(小)"/> ~ 
+				<input id="depthend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="深度(大)"/>
+				<%if(author>=1){%><br/><input id="lonbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="經度(小)"/> ~ 
+				<input id="lonend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="經度(大)"/>
+				<input id="latbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="緯度(小)"/> ~ 
+				<input id="latend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="緯度(大)"/><%} %>
+				<input id="position" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="位置"/>
 				</div>   		
 				
 				<script type="text/javascript"> 
