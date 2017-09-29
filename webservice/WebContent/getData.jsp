@@ -63,13 +63,182 @@ input{
  position:fixed; /*設定進度條跟隨屏幕滾動*/ 
  top:0; /*將進度條固定在頁面頂部*/ 
  z-index:99999; /*提高進度條的優先層級，避免被其他層遮擋*/ 
-} 
+ 
+}
+
+.col-xs-offset-right-12 {
+  margin-right: 100%;
+}
+.col-xs-offset-right-11 {
+  margin-right: 91.66666667%;
+}
+.col-xs-offset-right-10 {
+  margin-right: 83.33333333%;
+}
+.col-xs-offset-right-9 {
+  margin-right: 75%;
+}
+.col-xs-offset-right-8 {
+  margin-right: 66.66666667%;
+}
+.col-xs-offset-right-7 {
+  margin-right: 58.33333333%;
+}
+.col-xs-offset-right-6 {
+  margin-right: 50%;
+}
+.col-xs-offset-right-5 {
+  margin-right: 41.66666667%;
+}
+.col-xs-offset-right-4 {
+  margin-right: 33.33333333%;
+}
+.col-xs-offset-right-3 {
+  margin-right: 25%;
+}
+.col-xs-offset-right-2 {
+  margin-right: 16.66666667%;
+}
+.col-xs-offset-right-1 {
+  margin-right: 8.33333333%;
+}
+.col-xs-offset-right-0 {
+  margin-right: 0;
+}
+
+@media (min-width: 768px) {
+  .col-sm-offset-right-12 {
+    margin-right: 100%;
+  }
+  .col-sm-offset-right-11 {
+    margin-right: 91.66666667%;
+  }
+  .col-sm-offset-right-10 {
+    margin-right: 83.33333333%;
+  }
+  .col-sm-offset-right-9 {
+    margin-right: 75%;
+  }
+  .col-sm-offset-right-8 {
+    margin-right: 66.66666667%;
+  }
+  .col-sm-offset-right-7 {
+    margin-right: 58.33333333%;
+  }
+  .col-sm-offset-right-6 {
+    margin-right: 50%;
+  }
+  .col-sm-offset-right-5 {
+    margin-right: 41.66666667%;
+  }
+  .col-sm-offset-right-4 {
+    margin-right: 33.33333333%;
+  }
+  .col-sm-offset-right-3 {
+    margin-right: 25%;
+  }
+  .col-sm-offset-right-2 {
+    margin-right: 16.66666667%;
+  }
+  .col-sm-offset-right-1 {
+    margin-right: 8.33333333%;
+  }
+  .col-sm-offset-right-0 {
+    margin-right: 0;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-offset-right-12 {
+    margin-right: 100%;
+  }
+  .col-md-offset-right-11 {
+    margin-right: 91.66666667%;
+  }
+  .col-md-offset-right-10 {
+    margin-right: 83.33333333%;
+  }
+  .col-md-offset-right-9 {
+    margin-right: 75%;
+  }
+  .col-md-offset-right-8 {
+    margin-right: 66.66666667%;
+  }
+  .col-md-offset-right-7 {
+    margin-right: 58.33333333%;
+  }
+  .col-md-offset-right-6 {
+    margin-right: 50%;
+  }
+  .col-md-offset-right-5 {
+    margin-right: 41.66666667%;
+  }
+  .col-md-offset-right-4 {
+    margin-right: 33.33333333%;
+  }
+  .col-md-offset-right-3 {
+    margin-right: 25%;
+  }
+  .col-md-offset-right-2 {
+    margin-right: 16.66666667%;
+  }
+  .col-md-offset-right-1 {
+    margin-right: 8.33333333%;
+  }
+  .col-md-offset-right-0 {
+    margin-right: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-offset-right-12 {
+    margin-right: 100%;
+  }
+  .col-lg-offset-right-11 {
+    margin-right: 91.66666667%;
+  }
+  .col-lg-offset-right-10 {
+    margin-right: 83.33333333%;
+  }
+  .col-lg-offset-right-9 {
+    margin-right: 75%;
+  }
+  .col-lg-offset-right-8 {
+    margin-right: 66.66666667%;
+  }
+  .col-lg-offset-right-7 {
+    margin-right: 58.33333333%;
+  }
+  .col-lg-offset-right-6 {
+    margin-right: 50%;
+  }
+  .col-lg-offset-right-5 {
+    margin-right: 41.66666667%;
+  }
+  .col-lg-offset-right-4 {
+    margin-right: 33.33333333%;
+  }
+  .col-lg-offset-right-3 {
+    margin-right: 25%;
+  }
+  .col-lg-offset-right-2 {
+    margin-right: 16.66666667%;
+  }
+  .col-lg-offset-right-1 {
+    margin-right: 8.33333333%;
+  }
+  .col-lg-offset-right-0 {
+    margin-right: 0;
+  } 
+  
+ .navbar-header .navbar-toggle .icon-bar {
+ 
+  background:black !important;
+}
 </style>
 <script>
 function showTime(){
 		var timeSpan = document.getElementById("time");
 		var date  = new Date().toLocaleString();
-		timeSpan.innerHTML = date.fontcolor("lightblue");
+		timeSpan.innerHTML = date.fontcolor("blue");
 		window.setTimeout(showTime,1000);
 }
 
@@ -166,17 +335,36 @@ int much=1;
 <div class="container-filed">
 	<div class="row">
         <div class="col-xs-12">
-        	<div class="col-xs-4">
-        		<img src="img/logo.png" height="50" width="120">
+        	<div class="col-xs-2" style="text-align:center;">
+        		<img src="img/logo.png" height="60" width="150">
         	</div>
-            <div class="col-xs-5">
+            <div class="col-xs-6">
         	</div>
-            <div class="col-xs-3" style="text-align:center; padding-top:15px;">
+            <div class="col-sm-3 hidden-xs" style="text-align:right; padding-top:15px;">
             歡迎,<span style="color:blue;font-size:13px"> <%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span>
         	</div>
+        	<div class="navbar-header">
+				<button type="button" class="navbar-toggle"  style="border:2px solid rgba(48, 88, 232, 0.61);background-color:rgba(52, 140, 229, 0.25);" data-toggle="collapse"
+						data-target="#example-navbar-collapse">
+					<span class="sr-only">切换导航</span>
+					<span class="icon-bar" style="background:rgba(48, 88, 232, 0.61);"></span>
+					<span class="icon-bar" style="background:rgba(48, 88, 232, 0.61);"></span>
+					<span class="icon-bar" style="background:rgba(48, 88, 232, 0.61);"></span>
+				</button>
+			</div>
+		    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp">地震查詢</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp">權限管理</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp">修改帳密</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#">現在時間 : <span id="time"></span></a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
+				</ul>
+			</div>
         </div>
-        <div class="col-xs-12" style="height:100vh">
-        	<div class="list-group col-xs-2">
+        
+        <div class="col-xs-12 col-sm-12" style="height:100vh">
+        	<div class="list-group col-sm-2 hidden-xs">
                 <a href="getData.jsp" class="list-group-item ">地震查詢</a>
                 <a href="manager.jsp" class="list-group-item ">權限管理</a>
 				<a href="change.jsp" class="list-group-item ">修改帳密</a><br/><br/>	
@@ -188,30 +376,30 @@ int much=1;
 			 //第一個進度節點 
 			</script> 
         	
-            <div class="col-xs-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
+            <div class="col-xs-12 col-sm-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
             	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢
             	<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢</button>
             	<span id="ckId"></span>
             	</div><br/><br/>
 				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">
-				<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="開始日期"/> ~ 
-				<input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="結束日期"/>
-				<input id="scalebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="規模(小)"/> ~ 
-				<input id="scaleend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="規模(大)"/>
-				<input id="depthbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="深度(小)"/> ~ 
-				<input id="depthend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="深度(大)"/>
-				<%if(author>=1){%><br/><input id="lonbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="經度(小)"/> ~ 
-				<input id="lonend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="經度(大)"/>
-				<input id="latbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="緯度(小)"/> ~ 
-				<input id="latend" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="緯度(大)"/><%} %>
-				<input id="position" style="border: 1px solid rgba(100, 137, 206, 0.4);" type="text" placeholder="位置"/>
+					<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4); width:120px;" type="text" placeholder="開始日期"/> ~ 
+					<input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="結束日期"/>
+					<input id="scalebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="規模(小)"/> ~ 
+					<input id="scaleend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="規模(大)"/>
+					<input id="depthbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="深度(小)"/> ~ 
+					<input id="depthend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="深度(大)"/>
+					<%if(author>=1){%><br/><input id="lonbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="經度(小)"/> ~ 
+					<input id="lonend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="經度(大)"/>
+					<input id="latbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(小)"/> ~ 
+					<input id="latend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(大)"/><%} %>
+					<input id="position" style="border: 1px solid rgba(100, 137, 206, 0.4);width:260px;" type="text" placeholder="位置"/>
 				</div>   		
 				
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'60%'},100); 
 			</script> 
 				
-				<table class="table table-bordered table-hover" style="font-size:5px;">					            					
+				<table class="table table-bordered table-hover" style="font-size:8px;">					            					
 				    <thead >
 				      <tr>
 				         <th>編號</th>
