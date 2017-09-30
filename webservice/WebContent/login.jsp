@@ -4,7 +4,7 @@
 <%
 String have = (String)session.getAttribute("user");
 if(have !=null) {
-	request.getRequestDispatcher("member.jsp").forward(request, response);
+	request.getRequestDispatcher("getData.jsp").forward(request, response);
 }
 %>
 <html>
