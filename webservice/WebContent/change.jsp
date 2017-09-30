@@ -13,8 +13,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<link rel="shortcut icon" href="img/logo2.png">
-<title>樂活之旅</title>
+<link rel="shortcut icon" href="img/logo.png">
+<title>地震查詢</title>
 
 <style>
 .list-group-item{

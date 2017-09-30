@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="switch/bootstrapSwitch.css">
 <script src="switch/bootstrapSwitch.js"></script>
 
-<link rel="shortcut icon" href="img/logo2.png">
+<link rel="shortcut icon" href="img/logo.png">
 <title>地震查詢</title>
 
 <style>

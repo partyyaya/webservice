@@ -19,10 +19,10 @@ public class getearthData {
 	
 	public static LinkedList<quakedata> timeGetData(String date,String todate){
 		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
-		int begin = 0,end=0;
-		String dates[]=date.split("/");
-		String todates[]=todate.split("/");
+		String dates[]=date.split("-");
+		String todates[]=todate.split("-");
 		//若日期不正確則回傳
+		//System.out.println(dates[0]);
 		if(Integer.parseInt(dates[0])>Integer.parseInt(todates[0])) {
 			System.out.println(dates[0]);
 			return list;
@@ -33,6 +33,7 @@ public class getearthData {
 			System.out.println(dates[2]);
 			return list;
 		}
+		if(Integer.parseInt(dates[0])<1995) {date="1995-1-1";}
 		try {			
 			Class.forName("com.mysql.jdbc.Driver");		
 		} catch (Exception e) {
@@ -42,81 +43,31 @@ public class getearthData {
 		prop.setProperty("user", "root");
 		prop.setProperty("password", "root");
 		
-		String sql = "SELECT * FROM data where date like ?";
-		String insql = "SELECT * FROM data where id between ? and ?";
+		String sql = "SELECT * FROM data where date between ? and ?";
+
 		Connection conn;
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/earthquake?useUnicode=true&characterEncoding=UTF-8",prop);
 			PreparedStatement pstmt=conn.prepareStatement(sql);
-			PreparedStatement pstmt2=conn.prepareStatement(sql);
-			PreparedStatement pstmt3=conn.prepareStatement(insql);
-			
 			ResultSet rs = null;
-			//將開始日期找到
-			System.out.println("ok");
-			while(begin==0) {
-				pstmt.setString(1,date+" %");
+				pstmt.setString(1,date);
+				pstmt.setString(2,todate);
 				rs = pstmt.executeQuery();
-				//將最後日期找到
-				if(rs.next()) {
-					begin = rs.getInt("id");
-				}
-				//若日期沒有找到
-				if(begin==0) {
-					//如果前一個月都沒發生地震
-					dates=date.split("/");
-					if(Integer.parseInt(dates[2])==Integer.parseInt(getday(Integer.parseInt(dates[0]),Integer.parseInt(dates[1])))) {
-						date = dates[0]+"/"+(Integer.parseInt(dates[1])+1)+"/"+1;
-						System.out.println(date);
-					}else {
-						date = dates[0]+"/"+dates[1]+"/"+(Integer.parseInt(dates[2])+1);
-					}
-				}
-			}
-			System.out.println("ok2 "+date);
-			ResultSet rs2 = null;			
-			while(end==0) {
-				pstmt2.setString(1,todate+" %");
-				rs2 = pstmt2.executeQuery();
-				//將最後日期找到
-				while(rs2.next()) {
-					end = rs2.getInt("id");
-				}
-				//若日期沒有找到
-				if(end==0) {
-					todates=todate.split("/");
-					if(Integer.parseInt(todates[2])==1) {//若當月都沒發生地震,則到前一個月的最後開始尋找
-						todate = todates[0]+"/"+(Integer.parseInt(todates[1])-1)+"/"+getday(Integer.parseInt(todates[0]),(Integer.parseInt(todates[1])-1));
-					}else {
-						todate = todates[0]+"/"+todates[1]+"/"+(Integer.parseInt(todates[2])-1);
-						System.out.println("ok3 "+todate);
-					}
-				}
-			}
-			
-			if(begin>end) {
-				return list;
-			}
-			pstmt3.setInt(1,begin);
-			pstmt3.setInt(2,end);
-			ResultSet rs3 = pstmt3.executeQuery();
-			while(rs3.next()) {
+				String rsdate=null;
+			while(rs.next()) {
 				quakedata data = new quakedata();
-				data.setNumber(rs3.getString("number"));
-				data.setDate(rs3.getString("date"));
-				data.setLon(rs3.getString("lon"));
-				data.setLat(rs3.getString("lat"));
-				data.setScale(rs3.getString("scale"));
-				data.setDepth(rs3.getString("depth"));
-				data.setPosition(rs3.getString("position"));
+				rsdate = rs.getString("date").substring(0,19);
+				data.setNumber(rs.getString("number"));
+				data.setDate(rsdate);
+				data.setLon(rs.getFloat("lon"));
+				data.setLat(rs.getFloat("lat"));
+				data.setScale(rs.getFloat("scale"));
+				data.setDepth(rs.getFloat("depth"));
+				data.setPosition(rs.getString("position"));
 				list.add(data);
 			}
-			rs.close();
-			rs2.close();
-			rs3.close();
+			rs.close();			
 			pstmt.close();
-			pstmt2.close();
-			pstmt3.close();
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -131,7 +82,7 @@ public class getearthData {
 			return list;
 		}
 		for(int i=0;i<=list.size()-1;i++) {
-			if(Float.parseFloat(list.get(i).getScale())>=Float.parseFloat(scale) && Float.parseFloat(list.get(i).getScale())<=Float.parseFloat(toscale)) {
+			if(list.get(i).getScale()>=Float.parseFloat(scale) && list.get(i).getScale()<=Float.parseFloat(toscale)) {
 				list2.add(list.get(i));
 			}
 		}		
@@ -144,7 +95,7 @@ public class getearthData {
 			return list;
 		}
 		for(int i=0;i<=list.size()-1;i++) {
-			if(Float.parseFloat(list.get(i).getDepth())>=Float.parseFloat(depth) && Float.parseFloat(list.get(i).getDepth())<=Float.parseFloat(todepth)) {
+			if(list.get(i).getDepth()>=Float.parseFloat(depth) && list.get(i).getDepth()<=Float.parseFloat(todepth)) {
 				list2.add(list.get(i));
 			}
 		}		
@@ -157,7 +108,7 @@ public class getearthData {
 			return list;
 		}
 		for(int i=0;i<=list.size()-1;i++) {
-			if(Float.parseFloat(list.get(i).getLat())>=Float.parseFloat(lat) && Float.parseFloat(list.get(i).getLat())<=Float.parseFloat(tolat)) {
+			if(list.get(i).getLat()>=Float.parseFloat(lat) && list.get(i).getLat()<=Float.parseFloat(tolat)) {
 				list2.add(list.get(i));
 			}
 		}		
@@ -170,7 +121,7 @@ public class getearthData {
 			return list;
 		}
 		for(int i=0;i<=list.size()-1;i++) {
-			if(Float.parseFloat(list.get(i).getLon())>=Float.parseFloat(lon) && Float.parseFloat(list.get(i).getLon())<=Float.parseFloat(tolon)) {
+			if(list.get(i).getLon()>=Float.parseFloat(lon) && list.get(i).getLon()<=Float.parseFloat(tolon)) {
 				list2.add(list.get(i));
 			}
 		}		

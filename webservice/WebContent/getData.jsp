@@ -237,8 +237,10 @@ input{
 <script>
 function showTime(){
 		var timeSpan = document.getElementById("time");
+		var timeSpan2 = document.getElementById("time2");
 		var date  = new Date().toLocaleString();
 		timeSpan.innerHTML = date.fontcolor("blue");
+		timeSpan2.innerHTML = date.fontcolor("lightblue");
 		window.setTimeout(showTime,1000);
 }
 
@@ -247,23 +249,26 @@ function inquire(){
 	var t,s,d,lo,la,po;
 	var timebegin = document.getElementById("timebegin").value;
 	var timeend = document.getElementById("timeend").value;
-	if(timebegin!="" && timeend!=""){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	var date = /^(\d{4}(\/|\-)\d{1,2}(\/|\-)\d{1,2}){1}$/;	
 	
+	if(timebegin!="" && timeend!=""){if(date.test(timebegin) && date.test(timeend)){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+		
 	var scalebegin = document.getElementById("scalebegin").value;
 	var scaleend = document.getElementById("scaleend").value;
-	if(scalebegin!="" && scaleend!=""){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-	
+	var f =/^[0-9]{0,3}(\.[0-9]{0,9}){0,1}$/;
+	if(scalebegin!="" && scaleend!=""){if(f.test(scalebegin) && f.test(scaleend)){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+		
 	var depthbegin = document.getElementById("depthbegin").value;
 	var depthend = document.getElementById("depthend").value;
-	if(depthbegin!="" && depthend!=""){d="depthbegin="+depthbegin+"&depthend="+depthend+"&"}else{d="";if(depthbegin=="" && depthend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	if(depthbegin!="" && depthend!=""){if(f.test(depthbegin) && f.test(depthend)){d="depthbegin="+depthbegin+"&depthend="+depthend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{d="";if(depthbegin=="" && depthend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 	
 	var lonbegin = document.getElementById("lonbegin").value;
 	var lonend = document.getElementById("lonend").value;
-	if(lonbegin!="" && lonend!=""){lo="lonbegin="+lonbegin+"&lonend="+lonend+"&"}else{lo="";if(lonbegin=="" && lonend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	if(lonbegin!="" && lonend!=""){if(f.test(lonbegin) && f.test(lonend)){lo="lonbegin="+lonbegin+"&lonend="+lonend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{lo="";if(lonbegin=="" && lonend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 	
 	var latbegin = document.getElementById("latbegin").value;
 	var latend = document.getElementById("latend").value;
-	if(latbegin!="" && latend!=""){la="latbegin="+latbegin+"&latend="+latend+"&"}else{la="";if(latbegin=="" && latend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	if(latbegin!="" && latend!=""){if(f.test(latbegin) && f.test(latend)){la="latbegin="+latbegin+"&latend="+latend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{la="";if(latbegin=="" && latend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 	
 	var position = document.getElementById("position").value;
 	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
@@ -311,25 +316,21 @@ int much=1;
 	String position=(String)request.getParameter("position");
 	
 	LinkedList<quakedata> list = null;
+	long startTime = System.currentTimeMillis();
 	if(timebegin == null || timeend==null){
-		list = getearthData.timeGetData("2017/9/15","2017/9/30");
+		list = getearthData.timeGetData("2017-9-15","2017-9-30");
 	}else if(timebegin != null && timeend!=null){		
-		String[] timebegins = timebegin.split("-");
-		String[] timeends = timeend.split("-");
-		timebegin = timebegins[0]+"/"+Integer.parseInt(timebegins[1])+"/"+Integer.parseInt(timebegins[2]);
-		timeend =timeends[0]+"/"+Integer.parseInt(timeends[1])+"/"+Integer.parseInt(timeends[2]);		
-		System.out.println(timebegin+"."+timeend);
 		list = getearthData.timeGetData(timebegin,timeend);
-	}
-	
+	}	
 	if(scalebegin != null && scaleend!=null || depthbegin != null && depthend!=null || lonbegin != null && lonend!=null || latbegin != null && latend!=null || position != null){
-		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995/1/1","2017/9/30");}
+		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995-1-1","2017-9-30");}
 		if(scalebegin != null && scaleend!=null){list = getearthData.scaleGetData(scalebegin,scaleend,list);}
 		if(depthbegin != null && depthend!=null){list = getearthData.depthGetData(depthbegin,depthend,list);}
 		if(lonbegin != null && lonend!=null){list = getearthData.lonGetData(lonbegin,lonend,list);}
 		if(latbegin != null && latend!=null){list = getearthData.latGetData(latbegin,latend,list);}
 		if(position != null){list = getearthData.positionGetData(position,list);}
 	}
+	float totTime = (float)(System.currentTimeMillis()-startTime)/1000;
 	
 %>
 <div class="container-filed">
@@ -354,10 +355,10 @@ int much=1;
 			</div>
 		    <div class="collapse navbar-collapse" id="example-navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp">地震查詢</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp">權限管理</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp">修改帳密</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#">現在時間 : <span id="time"></span></a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp" style="text-align:center;">地震查詢</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp" style="text-align:center;">修改帳密</a></li>
+					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">現在時間 : <span id="time"></span></a></li>
 					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
 				</ul>
 			</div>
@@ -368,7 +369,7 @@ int much=1;
                 <a href="getData.jsp" class="list-group-item ">地震查詢</a>
                 <a href="manager.jsp" class="list-group-item ">權限管理</a>
 				<a href="change.jsp" class="list-group-item ">修改帳密</a><br/><br/>	
-            	<div id="gettime" style="text-align:center;">現在時間<br/><span id="time"></span></div>
+            	<div id="gettime" style="text-align:center;">現在時間<br/><span id="time2"></span></div>
         	</div>
         	
         	<script type="text/javascript"> 
@@ -378,12 +379,12 @@ int much=1;
         	
             <div class="col-xs-12 col-sm-10" id="tablecontent" style="overflow-y:scroll; SCROLLBAR-FACE-COLOR: #c2d3fc;">
             	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">地震查詢
-            	<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢</button>
+            	<button style="margin-bottom:0px;" type="button" class="btn btn-info" onclick="inquire()" >查詢 </button>           	            	
             	<span id="ckId"></span>
-            	</div><br/><br/>
-				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">
+            	</div><br/><br/>            
+				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;margin-bottom:3px;display:inline-block;">
 					<input id="timebegin" style="border: 1px solid rgba(100, 137, 206, 0.4); width:120px;" type="text" placeholder="開始日期"/> ~ 
-					<input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="結束日期"/>
+					<input id="timeend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="結束日期" />
 					<input id="scalebegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="規模(小)"/> ~ 
 					<input id="scaleend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="規模(大)"/>
 					<input id="depthbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="深度(小)"/> ~ 
@@ -393,8 +394,9 @@ int much=1;
 					<input id="latbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(小)"/> ~ 
 					<input id="latend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(大)"/><%} %>
 					<input id="position" style="border: 1px solid rgba(100, 137, 206, 0.4);width:260px;" type="text" placeholder="位置"/>
+					<div class="hidden-lg">查詢所花時間 : <%=totTime%>秒 </div>
+					<span class="hidden-xs">查詢所花時間 : <%=totTime%>秒</span>					
 				</div>   		
-				
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'60%'},100); 
 			</script> 
@@ -426,13 +428,13 @@ int much=1;
 				      </tr>
 					  <% 
 					  much++;
-				      }			
-			           %>
+				      }
+			          %>
 		           </tbody>
 				</table>
 				
-				<script type="text/javascript"> 
-			 $('.loading').animate({'width':'80%'},100); 
+				<script type="text/javascript">
+			     $('.loading').animate({'width':'80%'},100);
 			</script>
 			<div style="font-size:10px;font-weight:bold;text-align:center;">總共符合:<%=much-1%>筆資料</div>
         	</div>
@@ -440,12 +442,10 @@ int much=1;
 	</div>
 </div>
 </body>
-
 	<script type="text/javascript"> 
-						 $('.loading').animate({'width':'100%'},100); 
-						 $(document).ready(function(){ 
-							 $('.loading').fadeOut();  
-							});
+		 $('.loading').animate({'width':'100%'},100); 
+		 $(document).ready(function(){ 
+			 $('.loading').fadeOut();  
+			});
 	</script> 
-
 </html>
