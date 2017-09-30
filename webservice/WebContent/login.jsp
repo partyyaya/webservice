@@ -213,7 +213,7 @@ if(have !=null) {
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9 col-xs-offset-3 col-xs-9">
-                    <input type="submit" class="btn btn-default" style="color:blue;font-weight: 900;" value="登入"/>
+                    <input type="submit" class="btn btn-info" style="color:blue;font-weight: 900;" value="登入"/>
                 </div>
             </div>
             <div class="form-group">

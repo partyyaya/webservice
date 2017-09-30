@@ -348,7 +348,7 @@ function switches(a,i){
             	%> 
             	<div class="col-xs-12" style="font-size:23px;font-weight:bold;text-align:left;">管理員管理</div>
 				<div class="col-xs-12" style="font-size:15px;font-weight:bold;text-align:left;">查詢管理員名稱 : <input type="text" style="width:120px" placeholder="請輸入查詢帳號" onchange="inquire(this)" /></div>   		
-				<table class="table table-bordered table-hover col-sm-12" style="font-size:8px;">					            					
+				<table class="table table-bordered table-hover col-sm-12" >					            					
 				    <thead >
 				      <tr>
 				         <th>帳號</th>
@@ -364,9 +364,9 @@ function switches(a,i){
 						System.out.println(rs.getString("user"));
 				    %>
 				      <tr>
-				         <td><%=rs.getString("user")%></td>
+				         <td><input type="text" style="width:40px" value="<%=rs.getString("user")%>" readonly/></td>
 				         <td><input type="text" style="width:40px" value="<%=rs.getString("passwd") %>" onchange="chpasswd(this,'<%=rs.getString("user")%>')"/></td>
-				         <%if(author==2){%><td><div class="switch" data-on="primary" data-off="danger"><input type="checkbox" style="width:30px" onchange="switches(this,'<%=rs.getString("user")%>')" <% if(Integer.parseInt(rs.getString("authority"))>=1){%>checked<%}%> /></div></td><%} %>
+				         <%if(author==2){%><td><div class="switch" data-on="primary" data-off="danger"><input type="checkbox" style="width:40px" onchange="switches(this,'<%=rs.getString("user")%>')" <% if(Integer.parseInt(rs.getString("authority"))>=1){%>checked<%}%> /></div></td><%} %>
 				         <%if(author==2){%><td><button type="button" class="btn btn-danger" id="delete" onClick="del(this,'<%=rs.getString("user")%>')">刪除</button></td><%} %>
 				      </tr>
 					  <% 

@@ -295,7 +295,8 @@ function checkAll(){
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9 col-xs-offset-4 col-xs-8">
-                    <input type="submit" class="btn btn-default" style="color:blue;font-weight: 900;" value="註冊帳號"/>
+                    <input type="submit" class="btn btn-info" style="color:blue;font-weight: 900;" value="註冊帳號"/>
+                    <button  type="button" class="btn btn-info" style="color:blue;font-weight: 900;" onclick="javascript:location.href='login.jsp'">回登入頁面</button>
                 </div>
             </div>
         </form>	

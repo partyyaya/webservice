@@ -273,7 +273,11 @@ function inquire(){
 	var position = document.getElementById("position").value;
 	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 	
-	window.location.replace("getData.jsp?"+t+s+d+lo+la+po);
+	var totall = t+s+d+lo+la+po;
+	if(totall.slice(-1)=="&"){
+		totall = totall.substring(0,(totall.length-1));
+	}
+	window.location.replace("getData.jsp?"+totall);
 }
 
 $(document).ready(function(){ 
