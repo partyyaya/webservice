@@ -20,6 +20,7 @@ public class logOut extends HttpServlet {
 			session.removeAttribute("user");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

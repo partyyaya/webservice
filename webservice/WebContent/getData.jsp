@@ -234,70 +234,6 @@ input{
   background:black !important;
 }
 </style>
-<script>
-function showTime(){
-		var timeSpan = document.getElementById("time");
-		var timeSpan2 = document.getElementById("time2");
-		var date  = new Date().toLocaleString();
-		timeSpan.innerHTML = date.fontcolor("blue");
-		timeSpan2.innerHTML = date.fontcolor("lightblue");
-		window.setTimeout(showTime,1000);
-}
-
-function inquire(){
-	var spanNode = document.getElementById("ckId");
-	var t,s,d,lo,la,po;
-	var timebegin = document.getElementById("timebegin").value;
-	var timeend = document.getElementById("timeend").value;
-	var date = /^(\d{4}(\/|\-)\d{1,2}(\/|\-)\d{1,2}){1}$/;	
-	
-	if(timebegin!="" && timeend!=""){if(date.test(timebegin) && date.test(timeend)){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-		
-	var scalebegin = document.getElementById("scalebegin").value;
-	var scaleend = document.getElementById("scaleend").value;
-	var f =/^[0-9]{0,3}(\.[0-9]{0,9}){0,1}$/;
-	if(scalebegin!="" && scaleend!=""){if(f.test(scalebegin) && f.test(scaleend)){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-		
-	var depthbegin = document.getElementById("depthbegin").value;
-	var depthend = document.getElementById("depthend").value;
-	if(depthbegin!="" && depthend!=""){if(f.test(depthbegin) && f.test(depthend)){d="depthbegin="+depthbegin+"&depthend="+depthend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{d="";if(depthbegin=="" && depthend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-	
-	var lonbegin = document.getElementById("lonbegin").value;
-	var lonend = document.getElementById("lonend").value;
-	if(lonbegin!="" && lonend!=""){if(f.test(lonbegin) && f.test(lonend)){lo="lonbegin="+lonbegin+"&lonend="+lonend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{lo="";if(lonbegin=="" && lonend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-	
-	var latbegin = document.getElementById("latbegin").value;
-	var latend = document.getElementById("latend").value;
-	if(latbegin!="" && latend!=""){if(f.test(latbegin) && f.test(latend)){la="latbegin="+latbegin+"&latend="+latend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{la="";if(latbegin=="" && latend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-	
-	var position = document.getElementById("position").value;
-	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
-	
-	var totall = t+s+d+lo+la+po;
-	if(totall.slice(-1)=="&"){
-		totall = totall.substring(0,(totall.length-1));
-	}
-	window.location.replace("getData.jsp?"+totall);
-}
-
-$(document).ready(function(){ 
-    var opt={dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
-             dayNamesMin:["日","一","二","三","四","五","六"],
-             monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-             monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-             prevText:"上月",
-             nextText:"次月",
-             weekHeader:"週",
-             showMonthAfterYear:true,
-             dateFormat:"yy-mm-dd"
-             };
-    $("#timebegin").datepicker(opt);
-    $("#timeend").datepicker(opt);
-    });
-</script>
-</head>
-<body onLoad="showTime()">
-<div class="loading"></div>
 <%
 int much=1;	
 	String user=(String)session.getAttribute("user");
@@ -337,6 +273,73 @@ int much=1;
 	float totTime = (float)(System.currentTimeMillis()-startTime)/1000;
 	
 %>
+<script>
+function showTime(){
+		var timeSpan = document.getElementById("time");
+		var timeSpan2 = document.getElementById("time2");
+		var date  = new Date().toLocaleString();
+		timeSpan.innerHTML = date.fontcolor("blue");
+		timeSpan2.innerHTML = date.fontcolor("lightblue");
+		window.setTimeout(showTime,1000);
+}
+
+function inquire(){
+	var spanNode = document.getElementById("ckId");
+	var t,s,d,lo,la,po;
+	var timebegin = document.getElementById("timebegin").value;
+	var timeend = document.getElementById("timeend").value;
+	var date = /^(\d{4}(\/|\-)\d{1,2}(\/|\-)\d{1,2}){1}$/;	
+	
+	if(timebegin!="" && timeend!=""){if(date.test(timebegin) && date.test(timeend)){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+		
+	var scalebegin = document.getElementById("scalebegin").value;
+	var scaleend = document.getElementById("scaleend").value;
+	var f =/^[0-9]{0,3}(\.[0-9]{0,9}){0,1}$/;
+	if(scalebegin!="" && scaleend!=""){if(f.test(scalebegin) && f.test(scaleend)){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+		
+	var depthbegin = document.getElementById("depthbegin").value;
+	var depthend = document.getElementById("depthend").value;
+	if(depthbegin!="" && depthend!=""){if(f.test(depthbegin) && f.test(depthend)){d="depthbegin="+depthbegin+"&depthend="+depthend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{d="";if(depthbegin=="" && depthend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+
+	<%if(author>=1){%>
+	var lonbegin = document.getElementById("lonbegin").value;
+	var lonend = document.getElementById("lonend").value;
+	if(lonbegin!="" && lonend!=""){if(f.test(lonbegin) && f.test(lonend)){lo="lonbegin="+lonbegin+"&lonend="+lonend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{lo="";if(lonbegin=="" && lonend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var latbegin = document.getElementById("latbegin").value;
+	var latend = document.getElementById("latend").value;
+	if(latbegin!="" && latend!=""){if(f.test(latbegin) && f.test(latend)){la="latbegin="+latbegin+"&latend="+latend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{la="";if(latbegin=="" && latend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	<%}%>
+	
+	var position = document.getElementById("position").value;
+	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
+	
+	var totall = t+s+d+lo+la+po;
+	if(totall.slice(-1)=="&"){
+		totall = totall.substring(0,(totall.length-1));
+	}
+	window.location.replace("getData.jsp?"+totall);
+}
+
+$(document).ready(function(){ 
+    var opt={dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+             dayNamesMin:["日","一","二","三","四","五","六"],
+             monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+             monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+             prevText:"上月",
+             nextText:"次月",
+             weekHeader:"週",
+             showMonthAfterYear:true,
+             dateFormat:"yy-mm-dd"
+             };
+    $("#timebegin").datepicker(opt);
+    $("#timeend").datepicker(opt);
+    });
+</script>
+</head>
+<body onLoad="showTime()">
+<div class="loading"></div>
+
 <div class="container-filed">
 	<div class="row">
         <div class="col-xs-12">
@@ -409,8 +412,8 @@ int much=1;
 				      <tr>
 				         <th>編號</th>
 				         <th>時間</th>
-				         <%if(author>=1){%><th>經度</th><%} %>
-				         <%if(author>=1){%><th>緯度</th><%} %>
+				         <%if(author>=1){%><th class="hidden-xs">經度</th><%} %>
+				         <%if(author>=1){%><th class="hidden-xs">緯度</th><%} %>
 				         <th>規模</th>
 				         <th>深度</th>
 				         <th>地址</th>				         
@@ -423,8 +426,8 @@ int much=1;
 				      <tr>			      
 				         <td><%=list.get(i).getNumber()%></td>
 				         <td><%=list.get(i).getDate()%></td>
-				         <%if(author>=1){%><td><%=list.get(i).getLon() %></td><%} %>
-				         <%if(author>=1){%><td><%=list.get(i).getLat()%></td><%} %>
+				         <%if(author>=1){%><td class="hidden-xs"><%=list.get(i).getLon() %></td><%} %>
+				         <%if(author>=1){%><td class="hidden-xs"><%=list.get(i).getLat()%></td><%} %>
 				         <td><%=list.get(i).getScale()%></td>
 				         <td><%=list.get(i).getDepth()%></td>
 				         <td><%=list.get(i).getPosition()%></td>
