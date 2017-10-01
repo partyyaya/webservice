@@ -357,13 +357,13 @@ int much=1;
 					<span class="icon-bar" style="background:rgba(48, 88, 232, 0.61);"></span>
 				</button>
 			</div>
-		    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+		    <div class="collapse navbar-collapse hidden-md" id="example-navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp" style="text-align:center;">地震查詢</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp" style="text-align:center;">修改帳密</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">現在時間 : <span id="time"></span></a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp" style="text-align:center;">地震查詢</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp" style="text-align:center;">修改帳密</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">現在時間 : <span id="time"></span></a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
 				</ul>
 			</div>
         </div>
@@ -398,8 +398,7 @@ int much=1;
 					<input id="latbegin" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(小)"/> ~ 
 					<input id="latend" style="border: 1px solid rgba(100, 137, 206, 0.4);width:120px;" type="text" placeholder="緯度(大)"/><%} %>
 					<input id="position" style="border: 1px solid rgba(100, 137, 206, 0.4);width:260px;" type="text" placeholder="位置"/>
-					<div class="hidden-lg">查詢所花時間 : <%=totTime%>秒 </div>
-					<span class="hidden-xs">查詢所花時間 : <%=totTime%>秒</span>					
+					<div >查詢所花時間 : <%=totTime%>秒 </div>				
 				</div>   		
 				<script type="text/javascript"> 
 			 $('.loading').animate({'width':'60%'},100); 

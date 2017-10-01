@@ -268,7 +268,7 @@ function checkAll(){
 <div class="container">
 	<div class="row">
         
-        <form class="col-sm-6 col-xs-12 col-sm-offset-3 form-horizontal" action="member"  method='post' onsubmit="return checkAll();" style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
+        <form class="col-sm-7 col-xs-12 col-sm-offset-3 form-horizontal" action="member"  method='post' onsubmit="return checkAll();" style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
             <div class="fom-group">
             <label for="userName" class="col-sm-3 col-sm-offset-right-9	 control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">註冊帳號</label> 
             </div>           

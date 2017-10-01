@@ -158,11 +158,11 @@ function checkAll(){
 			</div>
 		    <div class="collapse navbar-collapse" id="example-navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp">地震查詢</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp">權限管理</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp">修改帳密</a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#">現在時間 : <span id="time"></span></a></li>
-					<li class="active hidden-sm hidden-lg" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp" style="text-align:center;">地震查詢</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp" style="text-align:center;">修改帳密</a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">現在時間 : <span id="time"></span></a></li>
+					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
 				</ul>
 			</div>
         </div>
