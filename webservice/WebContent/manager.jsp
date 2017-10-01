@@ -370,6 +370,7 @@ function switches(a,i){
 				         <%if(author==2){%><td><button type="button" class="btn btn-danger" id="delete" onClick="del(this,'<%=rs.getString("user")%>')">刪除</button></td><%} %>
 				      </tr>
 					  <% 
+					  i++;
 				      }
 				   }catch (Exception e){
 		           		System.out.println(e);
