@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,java.sql.*,java.io.*" %>
-<%@page import="tw.service.*" %>
+<%@page import="tw.service.*,java.text.SimpleDateFormat" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -249,6 +249,20 @@ int much=1;
 	String latend=(String)request.getParameter("latend");
 	String position=(String)request.getParameter("position");
 	
+	//格式化
+	SimpleDateFormat nowdate = new java.text.SimpleDateFormat("yyyy-MM-dd"); 
+	//==GMT標準時間往後加八小時
+	nowdate.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+	//==取得目前時間
+	String sdate = nowdate.format(new java.util.Date());
+	String[] bedates = sdate.split("-");
+	String bedate = bedates[0]+"-"+(Integer.parseInt(bedates[1])-1)+"-"+(Integer.parseInt(bedates[2])-1);
+	if((Integer.parseInt(bedates[2])+1) > Integer.parseInt(getearthData.getday(Integer.parseInt(bedates[0]),Integer.parseInt(bedates[1])))){
+		sdate = bedates[0]+"-"+(Integer.parseInt(bedates[1])+1)+"-"+1;
+	}else{
+		sdate = bedates[0]+"-"+(Integer.parseInt(bedates[1]))+"-"+(Integer.parseInt(bedates[2])+1);
+	}
+	
 	//用一個集合存放資料
 	LinkedList<quakedata> list = null;
 	
@@ -257,15 +271,22 @@ int much=1;
 	
 	if(timebegin == null || timeend==null){
 		//若沒資料則設全部資料
-		list = getearthData.getAllData();
+		list = getearthData.timeGetData(bedate,sdate);
 	}else if(timebegin != null && timeend!=null){		
+		String[] endates = timeend.split("-");
+		if((Integer.parseInt(endates[2])+1) > Integer.parseInt(getearthData.getday(Integer.parseInt(endates[0]),Integer.parseInt(endates[1])))){
+			timeend = endates[0]+"-"+(Integer.parseInt(endates[1])+1)+"-"+1;
+		}else{
+			timeend = endates[0]+"-"+(Integer.parseInt(endates[1]))+"-"+(Integer.parseInt(endates[2])+1);
+		}
 		//若有輸入時間則進行篩選
+		System.out.println(timebegin+","+timeend);
 		list = getearthData.timeGetData(timebegin,timeend);
 	}
 	
 	//若以下有被輸入,則一一篩選
 	if(scalebegin != null && scaleend!=null || depthbegin != null && depthend!=null || lonbegin != null && lonend!=null || latbegin != null && latend!=null || position != null){
-		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995-1-1","2017-9-30");}
+		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995-1-1",sdate);}
 		if(scalebegin != null && scaleend!=null){list = getearthData.scaleGetData(scalebegin,scaleend,list);}
 		if(depthbegin != null && depthend!=null){list = getearthData.depthGetData(depthbegin,depthend,list);}
 		if(lonbegin != null && lonend!=null){list = getearthData.lonGetData(lonbegin,lonend,list);}

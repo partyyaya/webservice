@@ -9,13 +9,13 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class getearthData {
-	public static void main(String[] args) {
-		LinkedList<quakedata> list = getearthData.getAllData();
-		System.out.println(list.get(list.size()-1).getDate());
-//		String date="2016/1/16";
-//		String dates[]=date.split("/");
-//		System.out.println(dates[0]+":"+dates[1]+":"+dates[2]);
-	}
+//	public static void main(String[] args) {
+//		LinkedList<quakedata> list = getearthData.timeGetData("2017-09-28","2017-11-1");
+//		System.out.println(list.get(0).getDate());
+////		String date="2016/1/16";
+////		String dates[]=date.split("/");
+////		System.out.println(dates[0]+":"+dates[1]+":"+dates[2]);
+//	}
 	
 	public static LinkedList<quakedata> getAllData(){
 		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
@@ -64,17 +64,24 @@ public class getearthData {
 		String dates[]=date.split("-");
 		String todates[]=todate.split("-");
 		//若日期不正確則回傳
-		//System.out.println(dates[0]);
+		//System.out.println(dates[0]+","+todates[0]+","+dates[1]+","+Integer.parseInt(dates[1])+","+Integer.parseInt(todates[1])+","+todates[1]+","+dates[2]+","+todates[2]);
 		if(Integer.parseInt(dates[0])>Integer.parseInt(todates[0])) {
 			System.out.println(dates[0]);
 			return list;
-		}else if(Integer.parseInt(dates[1])>Integer.parseInt(todates[1])) {
-			System.out.println(dates[1]);
-			return list;
-		}else if(Integer.parseInt(dates[2])>Integer.parseInt(todates[2])) {
-			System.out.println(dates[2]);
-			return list;
+		}else {
+			if(Integer.parseInt(dates[1])>Integer.parseInt(todates[1])) {
+				System.out.println(dates[1]);
+				return list;
+			} 
+			if(Integer.parseInt(dates[1])==Integer.parseInt(todates[1])) {
+				if(Integer.parseInt(dates[2])>Integer.parseInt(todates[2])) {			
+					System.out.println(dates[2]);
+					return list;
+				}
+			}
 		}
+		//System.out.println(dates[0]);
+		System.out.println(dates[0]+","+todates[0]+","+dates[1]+","+Integer.parseInt(dates[1])+","+Integer.parseInt(todates[1])+","+todates[1]+","+dates[2]+","+todates[2]);		
 		if(Integer.parseInt(dates[0])<1995) {date="1995-1-1";}
 		try {			
 			Class.forName("com.mysql.jdbc.Driver");		
@@ -93,7 +100,7 @@ public class getearthData {
 			PreparedStatement pstmt=conn.prepareStatement(sql);
 			ResultSet rs = null;
 				pstmt.setString(1,date);
-				pstmt.setString(2,todate);
+				pstmt.setString(2,todate);				
 				rs = pstmt.executeQuery();
 				String rsdate=null;
 			while(rs.next()) {
@@ -180,7 +187,7 @@ public class getearthData {
 		return list2;
 	}
 	
-	private static String getday(int year,int month) {
+	public static String getday(int year,int month) {
 		String day = null;
 		switch(month) {
 			case 1:case 3:case 5:case 7:case 8:case 10:case 12:day="31";break;
