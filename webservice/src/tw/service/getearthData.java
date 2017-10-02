@@ -10,11 +10,53 @@ import java.util.Properties;
 
 public class getearthData {
 	public static void main(String[] args) {
-		LinkedList<quakedata> list = getearthData.timeGetData("2016/1/16","2017/8/20");
-		System.out.println(list.get(0).getPosition());
+		LinkedList<quakedata> list = getearthData.getAllData();
+		System.out.println(list.get(list.size()-1).getDate());
 //		String date="2016/1/16";
 //		String dates[]=date.split("/");
 //		System.out.println(dates[0]+":"+dates[1]+":"+dates[2]);
+	}
+	
+	public static LinkedList<quakedata> getAllData(){
+		LinkedList<quakedata> list = new LinkedList<>();//使用list存放資料
+		try {			
+			Class.forName("com.mysql.jdbc.Driver");		
+		} catch (Exception e) {
+			System.out.println(e);
+		}	
+		Properties prop = new Properties();
+		prop.setProperty("user", "root");
+		prop.setProperty("password", "root");
+		
+		String sql = "SELECT * FROM data ";
+
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/earthquake?useUnicode=true&characterEncoding=UTF-8",prop);
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			ResultSet rs = null;
+				rs = pstmt.executeQuery();
+				String rsdate=null;
+			while(rs.next()) {
+				quakedata data = new quakedata();
+				rsdate = rs.getString("date").substring(0,19);
+				data.setNumber(rs.getString("number"));
+				data.setDate(rsdate);
+				data.setLon(rs.getFloat("lon"));
+				data.setLat(rs.getFloat("lat"));
+				data.setScale(rs.getFloat("scale"));
+				data.setDepth(rs.getFloat("depth"));
+				data.setPosition(rs.getString("position"));
+				list.add(data);
+			}
+			rs.close();			
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	public static LinkedList<quakedata> timeGetData(String date,String todate){
