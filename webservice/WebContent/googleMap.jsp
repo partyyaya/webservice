@@ -402,7 +402,8 @@ $(document).ready(function(){
 			 $('.loading').animate({'width':'60%'},100); 
 				</script> 
 				<div class="col-xs-12 col-sm-12">
-					<div class="col-xs-12 col-sm-6" id="map" style="height:600px;">
+					<a name="gm"></a>
+					<div  class="col-xs-12 col-sm-6" id="map" style="height:600px;">
 					</div>
 					<div class="col-xs-12 col-sm-6">
 						<table class="table table-bordered table-hover " style="font-size:8px;">					            					
@@ -423,7 +424,7 @@ $(document).ready(function(){
 						    %>
 						      <tr>			      
 						         <td><%=list.get(i).getNumber()%></td>
-						         <td><a href="#" onclick="myClick(<%=i%>);"><%=list.get(i).getDate()%></a></td>
+						         <td><a href="#gm" onclick="myClick(<%=i%>);"><%=list.get(i).getDate()%></a></td>
 						         <td class="hidden-xs"><%=list.get(i).getLon()%></td>
 						         <td class="hidden-xs"><%=list.get(i).getLat()%></td>
 						         <td><%=list.get(i).getScale()%></td>
@@ -466,18 +467,17 @@ var locations = [
 	}
 	%>
 	  ];
-
+	
 	function myMap() {
-		 var myOptions = {
-		      center: new google.maps.LatLng(23.704894502324915,120.91552734375),
-		      zoom: 7,
-		      mapTypeId: google.maps.MapTypeId.ROADMAP
-		 };
+		var myOptions = {
+			      center: new google.maps.LatLng(23.704894502324915,120.91552734375),
+			      zoom: 7,
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+			 };
 		
-		 //讓google地圖出現在指定位置上
-	    var map = new google.maps.Map(document.getElementById("map"),
-	        myOptions);
-		 
+		//讓google地圖出現在指定位置上
+		var map = new google.maps.Map(document.getElementById("map"),
+		    myOptions); 		
 		//製造markers
 	    setMarkers(map,locations);
 	}
@@ -510,21 +510,24 @@ var locations = [
 		        var content = "編號:" + number+ "<br/>時間"+date+ "<br/>經度 : "+lon+" 緯度 : "+lat+"<br/>規模 : "+scale+" 深度 : "+depth+"<br/>位置 : "+position;     
 		  		var infowindow = new google.maps.InfoWindow();
 
-			google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 				    
-				return function() {
-			           infowindow.setContent(content);
+			google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 				    						
+				return function() {				   
+					   infowindow.setContent(content);
 			           infowindow.open(map,marker);
 			        };
 			    })(marker,content,infowindow));
 			//做好一個marker後放入markers陣列中
 			 markers.push(marker);
+			
 			}
 	}
 	google.maps.event.addDomListener(window, 'load', myMap);
     
+	
 	//藉由function來觸發marker
     function myClick(id){
-        google.maps.event.trigger(markers[id], 'click');
+		google.maps.event.trigger(markers[id],'click');
+		 
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8nyFG1vi9eZlzanSjwHEtarxhZmiIA6Q&callback=myMap"></script>
