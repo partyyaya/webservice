@@ -235,7 +235,8 @@ input{
 }
 </style>
 <%
-int much=1;		
+int much=1;
+	//讀取所有輸入的資料
 	String timebegin=(String)request.getParameter("timebegin");
 	String timeend=(String)request.getParameter("timeend");
 	String scalebegin=(String)request.getParameter("scalebegin");
@@ -248,13 +249,21 @@ int much=1;
 	String latend=(String)request.getParameter("latend");
 	String position=(String)request.getParameter("position");
 	
+	//用一個集合存放資料
 	LinkedList<quakedata> list = null;
+	
+	//開始計算時間
 	long startTime = System.currentTimeMillis();
+	
 	if(timebegin == null || timeend==null){
-		list = getearthData.timeGetData("2017-9-15","2017-9-30");
+		//若沒資料則設全部資料
+		list = getearthData.getAllData();
 	}else if(timebegin != null && timeend!=null){		
+		//若有輸入時間則進行篩選
 		list = getearthData.timeGetData(timebegin,timeend);
-	}	
+	}
+	
+	//若以下有被輸入,則一一篩選
 	if(scalebegin != null && scaleend!=null || depthbegin != null && depthend!=null || lonbegin != null && lonend!=null || latbegin != null && latend!=null || position != null){
 		if(timebegin == null && timeend==null){list = getearthData.timeGetData("1995-1-1","2017-9-30");}
 		if(scalebegin != null && scaleend!=null){list = getearthData.scaleGetData(scalebegin,scaleend,list);}
@@ -263,6 +272,8 @@ int much=1;
 		if(latbegin != null && latend!=null){list = getearthData.latGetData(latbegin,latend,list);}
 		if(position != null){list = getearthData.positionGetData(position,list);}
 	}
+	
+	//計算查詢總時間
 	float totTime = (float)(System.currentTimeMillis()-startTime)/1000;
 	
 %>
@@ -273,12 +284,16 @@ function inquire(){
 	var t,s,d,lo,la,po;
 	var timebegin = document.getElementById("timebegin").value;
 	var timeend = document.getElementById("timeend").value;
+	
+	//日期正規表示式
 	var date = /^(\d{4}(\/|\-)\d{1,2}(\/|\-)\d{1,2}){1}$/;	
 	
 	if(timebegin!="" && timeend!=""){if(date.test(timebegin) && date.test(timeend)){t="timebegin="+timebegin+"&timeend="+timeend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{t="";if(timebegin=="" && timeend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 		
 	var scalebegin = document.getElementById("scalebegin").value;
 	var scaleend = document.getElementById("scaleend").value;
+	
+	//浮點數正規表示式
 	var f =/^[0-9]{0,3}(\.[0-9]{0,9}){0,1}$/;
 	if(scalebegin!="" && scaleend!=""){if(f.test(scalebegin) && f.test(scaleend)){s="scalebegin="+scalebegin+"&scaleend="+scaleend+"&"}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}else{s="";if(scalebegin=="" && scaleend==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 		
@@ -300,6 +315,8 @@ function inquire(){
 	if(position!=""){po="position="+position+"&"}else{po="";if(position==""){spanNode.innerHTML ="";}else{spanNode.innerHTML = "✖請重新確認".fontcolor("red");return;}}
 	
 	var totall = t+s+d+lo+la+po;
+	
+	//若最後為&,則把它去除掉
 	if(totall.slice(-1)=="&"){
 		totall = totall.substring(0,(totall.length-1));
 	}
@@ -411,7 +428,10 @@ $(document).ready(function(){
 </div>
 
 <script>
+//準備將marker放入陣列中
 var markers = [];
+
+//將所有資料存放於陣列中
 var locations = [	
 	<%for(int ad=0;ad<=list.size()-1;ad++){
 		if(ad==(list.size()-1)){%>			
@@ -432,14 +452,18 @@ var locations = [
 		      zoom: 7,
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		 };
-		  
+		
+		 //讓google地圖出現在指定位置上
 	    var map = new google.maps.Map(document.getElementById("map"),
 	        myOptions);
+		 
+		//製造markers
 	    setMarkers(map,locations);
 	}
 
 	function setMarkers(map,locations){
-		var marker, i;		 
+		var marker, i;
+		//獲取每一項資料
 		for (i = 0; i < locations.length; i++){  
 			var number = locations[i][0];
 			var lat = locations[i][1];
@@ -450,14 +474,18 @@ var locations = [
 			var date =  locations[i][6];
 		 	latlngset = new google.maps.LatLng(lat, lon);
 			center = new google.maps.LatLng(23.704894502324915, 120.91552734375);
+			
+			//將資訊塞入marker,label: scale代表把規模顯示在marker上
 		  	var marker = new google.maps.Marker({  
 		          map: map,
 		          title: number ,
 		          position: latlngset,
 		          label: scale
 		        });
+				//將中心點設置好
 		        map.setCenter(center);
-
+			
+				//設置點選後的內容
 		        var content = "編號:" + number+ "<br/>時間"+date+ "<br/>經度 : "+lon+" 緯度 : "+lat+"<br/>規模 : "+scale+" 深度 : "+depth+"<br/>位置 : "+position;     
 		  		var infowindow = new google.maps.InfoWindow();
 
@@ -466,12 +494,14 @@ var locations = [
 			           infowindow.setContent(content);
 			           infowindow.open(map,marker);
 			        };
-			    })(marker,content,infowindow)); 
+			    })(marker,content,infowindow));
+			//做好一個marker後放入markers陣列中
 			 markers.push(marker);
 			}
 	}
 	google.maps.event.addDomListener(window, 'load', myMap);
     
+	//藉由function來觸發marker
     function myClick(id){
         google.maps.event.trigger(markers[id], 'click');
     }
