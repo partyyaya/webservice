@@ -385,7 +385,7 @@ $(document).ready(function(){
 						    %>
 						      <tr>			      
 						         <td><%=list.get(i).getNumber()%></td>
-						         <td><%=list.get(i).getDate()%></td>
+						         <td><a href="#" onclick="myClick(<%=i%>);"><%=list.get(i).getDate()%></a></td>
 						         <td class="hidden-xs"><%=list.get(i).getLon()%></td>
 						         <td class="hidden-xs"><%=list.get(i).getLat()%></td>
 						         <td><%=list.get(i).getScale()%></td>
@@ -411,6 +411,7 @@ $(document).ready(function(){
 </div>
 
 <script>
+var markers = [];
 var locations = [	
 	<%for(int ad=0;ad<=list.size()-1;ad++){
 		if(ad==(list.size()-1)){%>			
@@ -438,8 +439,7 @@ var locations = [
 	}
 
 	function setMarkers(map,locations){
-		var marker, i;
-
+		var marker, i;		 
 		for (i = 0; i < locations.length; i++){  
 			var number = locations[i][0];
 			var lat = locations[i][1];
@@ -449,24 +449,32 @@ var locations = [
 			var position =  locations[i][5];
 			var date =  locations[i][6];
 		 	latlngset = new google.maps.LatLng(lat, lon);
-
+			center = new google.maps.LatLng(23.704894502324915, 120.91552734375);
 		  	var marker = new google.maps.Marker({  
-		          map: map, title: number , position: latlngset  
+		          map: map,
+		          title: number ,
+		          position: latlngset,
+		          label: scale
 		        });
-		        map.setCenter(marker.getPosition());
+		        map.setCenter(center);
 
 		        var content = "編號:" + number+ "<br/>時間"+date+ "<br/>經度 : "+lon+" 緯度 : "+lat+"<br/>規模 : "+scale+" 深度 : "+depth+"<br/>位置 : "+position;     
 		  		var infowindow = new google.maps.InfoWindow();
 
-			google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-			        return function() {
+			google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 				    
+				return function() {
 			           infowindow.setContent(content);
 			           infowindow.open(map,marker);
 			        };
 			    })(marker,content,infowindow)); 
-	
+			 markers.push(marker);
 			}
 	}
+	google.maps.event.addDomListener(window, 'load', myMap);
+    
+    function myClick(id){
+        google.maps.event.trigger(markers[id], 'click');
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8nyFG1vi9eZlzanSjwHEtarxhZmiIA6Q&callback=myMap"></script>
 

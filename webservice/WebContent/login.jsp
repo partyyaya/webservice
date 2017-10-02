@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 String have = (String)session.getAttribute("user");
+String close = (String)request.getAttribute("close");
+String miss = (String)request.getAttribute("miss");
+System.out.println(close);
 if(have !=null) {
 	request.getRequestDispatcher("getData.jsp").forward(request, response);
 }
@@ -194,11 +197,12 @@ if(have !=null) {
 <img src="img/logo.png" height="150" width="250" style="opacity:0.6">
 <div class="container">
 	<div class="row">
-        
         <form class="col-sm-6 col-sm-offset-3 form-horizontal" action="loginMember"  method='post' style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
             <div class="fom-group">
-            <label for="userName" class="col-sm-3 col-sm-offset-right-9	 control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">登入</label> 
-            </div>           
+            <label for="userName" class="col-sm-3  control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">登入</label> 
+            <%if(close!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">您的帳號已被禁用</span><%} %>  
+            <%if(miss!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">帳號或密碼輸入錯誤</span><%} %>  
+            </div>         
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
             <label for="user" class=" col-sm-3 col-xs-3 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">帳號:</label>
                 <div class="col-sm-8 col-xs-8">

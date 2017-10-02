@@ -363,7 +363,7 @@ $(document).ready(function(){
 		    <div class="collapse navbar-collapse hidden-md" id="example-navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="getData.jsp" style="text-align:center;">地震查詢</a></li>
-					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li>
+					<%if(author==2){%><li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="manager.jsp" style="text-align:center;">權限管理</a></li><%} %>
 					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="change.jsp" style="text-align:center;">修改帳密</a></li>
 					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">現在時間 : <span id="time"></span></a></li>
 					<li class="active hidden-sm hidden-lg hidden-md" style="background-color:rgba(52, 140, 229, 0.1);"><a href="#" style="text-align:center;">歡迎,<span style="color:blue;font-size:13px;"><%=user%>&nbsp;&nbsp;&nbsp;<button style="margin-bottom:3px;" type="button" class="btn btn-danger" onclick="javascript:location.href='logOut'" >登出</button></span></a></li>
@@ -374,7 +374,7 @@ $(document).ready(function(){
         <div class="col-xs-12 col-sm-12" style="height:100vh">
         	<div class="list-group col-sm-2 hidden-xs">
                 <a href="getData.jsp" class="list-group-item ">地震查詢</a>
-                <a href="manager.jsp" class="list-group-item ">權限管理</a>
+                <%if(author==2){%><a href="manager.jsp" class="list-group-item ">權限管理</a><%} %>
 				<a href="change.jsp" class="list-group-item ">修改帳密</a><br/><br/>	
             	<div id="gettime" style="text-align:center;">現在時間<br/><span id="time2"></span></div>
         	</div>

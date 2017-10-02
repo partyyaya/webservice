@@ -51,14 +51,17 @@ public class loginMember extends HttpServlet {
 				System.out.println("123");
 				if(rs.next()) {
 					//將名稱傳回主頁
+					if(Integer.parseInt(rs.getString("authority"))==0) {
+						request.setAttribute("close","0");
+						request.getRequestDispatcher("login.jsp").forward(request, response);
+					}else {
 					session.setAttribute("user", user);
 					session.setAttribute("authority", rs.getString("authority"));
 					request.getRequestDispatcher("getData.jsp").forward(request, response);
-				}else {
-					out.println("<script type=\"text/javascript\">");
-					out.println("alert('帳號或密碼輸入錯誤,請重新輸入');");
-					out.println("location='login.jsp';");
-					out.println("</script>");
+					}
+				}else {					
+						request.setAttribute("miss","0");
+						request.getRequestDispatcher("login.jsp").forward(request, response);					
 				}
 			}
 			catch (Exception e){
