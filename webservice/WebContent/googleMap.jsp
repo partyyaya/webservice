@@ -467,7 +467,8 @@ var locations = [
 	}
 	%>
 	  ];
-	
+	var make;
+	var infowindow;
 	function myMap() {
 		var myOptions = {
 			      center: new google.maps.LatLng(23.704894502324915,120.91552734375),
@@ -476,10 +477,10 @@ var locations = [
 			 };
 		
 		//讓google地圖出現在指定位置上
-		var map = new google.maps.Map(document.getElementById("map"),
+		 make = new google.maps.Map(document.getElementById("map"),
 		    myOptions); 		
 		//製造markers
-	    setMarkers(map,locations);
+	    setMarkers(make,locations);
 	}
 
 	function setMarkers(map,locations){
@@ -508,7 +509,7 @@ var locations = [
 			
 				//設置點選後的內容
 		        var content = "編號:" + number+ "<br/>時間"+date+ "<br/>經度 : "+lon+" 緯度 : "+lat+"<br/>規模 : "+scale+" 深度 : "+depth+"<br/>位置 : "+position;     
-		  		var infowindow = new google.maps.InfoWindow();
+		  		infowindow = new google.maps.InfoWindow();
 
 			google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 				    						
 				return function() {				   
@@ -517,17 +518,18 @@ var locations = [
 			        };
 			    })(marker,content,infowindow));
 			//做好一個marker後放入markers陣列中
-			 markers.push(marker);
-			
+			 markers.push(marker);			
 			}
 	}
 	google.maps.event.addDomListener(window, 'load', myMap);
-    
-	
+    	
 	//藉由function來觸發marker
     function myClick(id){
 		google.maps.event.trigger(markers[id],'click');
-		 
+    	center = new google.maps.LatLng(locations[id][1],locations[id][2]);
+    	//重新設定中心位置,以及拉近效果
+    	make.setCenter(center);
+    	make.setZoom(16);
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8nyFG1vi9eZlzanSjwHEtarxhZmiIA6Q&callback=myMap"></script>

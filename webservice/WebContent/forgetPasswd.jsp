@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%
-String have = (String)session.getAttribute("user");
-String close = (String)request.getAttribute("close");
-String miss = (String)request.getAttribute("miss");
-System.out.println(close);
-if(have !=null) {
-	request.getRequestDispatcher("getData.jsp").forward(request, response);
-}
-%>
 <html>
 <head>
 <!--設寬度為硬體寬的一倍( initial-scale=1)-->
@@ -190,42 +181,42 @@ if(have !=null) {
   }
 }
 </style>
+<%
+	String nothing = (String)request.getAttribute("nothing");
+%>
 <link rel="shortcut icon" href="img/logo.png">
-<title>氣象局地震查詢</title>
+<title>找回密碼</title>
 </head>
-<body>
+<body> 
 <img src="img/logo.png" height="150" width="250" style="opacity:0.6">
 <div class="container">
 	<div class="row">
-        <form class="col-sm-6 col-sm-offset-3 form-horizontal" action="loginMember"  method='post' style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
+        
+        <form class="col-sm-7 col-xs-12 col-sm-offset-3 form-horizontal" action="emailGetPasswd"  method='post' style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
             <div class="fom-group">
-            <label for="userName" class="col-sm-3  control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">登入</label> 
-            <%if(close!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">您的帳號已被禁用</span><%} %>  
-            <%if(miss!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">帳號或密碼輸入錯誤</span><%} %>  
-            </div>         
+            <label for="userName" class="col-sm-3 col-sm-offset-right-9	 control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">找回密碼</label> 
+            <%if(nothing!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">帳號或信箱錯誤</span><%} %>
+            </div>           
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
-            <label for="user" class=" col-sm-3 col-xs-3 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">帳號:</label>
-                <div class="col-sm-8 col-xs-8">
-                    <input type="text"  name="user" class="form-control"  placeholder="請輸入帳號">
+            <label for="user" class=" col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">帳號:</label>
+                <div class="col-sm-6 col-xs-4">
+                    <input type="text"  name="user"  class="form-control"  placeholder="註冊的帳號" />
                 </div>
+                <span id="userId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
             </div>
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:5px;display:inline-block;">
-            <label for="passwd" class="col-sm-3 col-xs-3 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">密碼:</label>
-                <div class="col-sm-8 col-xs-8">
-                    <input type="password" name="passwd"  class="form-control" placeholder="請輸入密碼" >
+            <label for="passwd" class="col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">信箱:</label>
+                <div class="col-sm-6 col-xs-4">
+                    <input type="text" name="email" class="form-control" placeholder="註冊的信箱"/>
+                </div>
+                <span id="passwdId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
+            </div>        
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9 col-xs-offset-4 col-xs-8">
+                    <input type="submit" class="btn btn-info" style="color:blue;font-weight: 900;" value="確認送出"/>
+                    <button  type="button" class="btn btn-info" style="color:blue;font-weight: 900;" onclick="javascript:location.href='login.jsp'">回登入頁面</button>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9 col-xs-offset-3 col-xs-9">
-                    <input type="submit" class="btn btn-info" style="color:blue;font-weight: 900;" value="登入"/>
-                </div>
-            </div>
-            <div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9 col-xs-offset-3 col-xs-9" style="color:rgba(35, 20, 235, 0.82);">
-					 <a class="color-green" href="addMember.jsp" style="color:red;">註冊帳號</a> | 
-					 <a class="color-green" href="forgetPasswd.jsp" style="color:red;">忘記密碼</a>
-				</div>
-			</div>
         </form>	
 	</div>
 </div>

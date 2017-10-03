@@ -21,6 +21,7 @@ public class member extends HttpServlet {
 		
 		String user = request.getParameter("user");
 		String passwd = request.getParameter("passwd");
+		String email = request.getParameter("email");
 		try {			
 			Class.forName("com.mysql.jdbc.Driver");		
 		} catch (Exception e) {
@@ -34,7 +35,7 @@ public class member extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		request.setCharacterEncoding("UTF-8");
 		
-		String insql = "INSERT INTO member(user,passwd,authority) values(?,?,?)";
+		String insql = "INSERT INTO member(user,passwd,authority,email) values(?,?,?,?)";
 		String sql = "SELECT * FROM member where user=? ";
 		synchronized(request) {
 		try (
@@ -56,6 +57,7 @@ public class member extends HttpServlet {
 					pstmt.setString(1, user);
 					pstmt.setString(2, passwd);
 					pstmt.setString(3,"0");
+					pstmt.setString(4,email);
 					pstmt.execute();
 					out.println("<script type=\"text/javascript\">");
 					out.println("location='login.jsp';");

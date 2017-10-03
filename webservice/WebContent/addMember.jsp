@@ -249,11 +249,27 @@ function doubleCheck(){
 	}
 }
 
+function checkEmail(){
+	var email = document.getElementById("email").value;
+	var spanNode = document.getElementById("emailId");
+	var reg = /^[a-z0-9]\w+@[a-z0-9]+(\.[a-z]{2,3}){1,2}$/i; 
+	if(reg.test(email)){
+		//符合规则
+		spanNode.innerHTML = "✔ ok".fontcolor("green");
+		return true;
+	}else{
+		//不符合规则
+		spanNode.innerHTML = "格式錯誤".fontcolor("red");		
+		return false;
+	}		
+}
+
 function checkAll(){
 	var user = checkName();	
 	var passwd = checkPass();
 	var ck = doubleCheck();
-	if(user && passwd && ck){
+	var email = checkEmail();
+	if(user && passwd && ck && email){
 		return true;
 	}	
 		return false;
@@ -292,6 +308,13 @@ function checkAll(){
                     <input type="password" id="ckpasswd"  class="form-control" placeholder="確認密码" onblur="doubleCheck()"/>
                 </div>
                 <span id="ckId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
+            </div>
+            <div class="col-sm-12 col-xs-12 form-group" style="margin-top:5px;display:inline-block;">
+            <label for="passwd" class="col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">信箱:</label>
+                <div class="col-sm-6 col-xs-4">
+                    <input type="text" id="email" name="email" class="form-control" placeholder="設置信箱" onblur="checkEmail()"/>
+                </div>
+                <span id="emailId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9 col-xs-offset-4 col-xs-8">
