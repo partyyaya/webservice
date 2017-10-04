@@ -184,6 +184,7 @@
 <%
 	String number=(String)request.getAttribute("number");
 	String user=(String)request.getAttribute("user");
+	System.out.println(number);
 %>    
 <link rel="shortcut icon" href="img/logo.png">
 <title>找回密碼</title>
@@ -196,29 +197,29 @@
         <form class="col-sm-7 col-xs-12 col-sm-offset-3 form-horizontal" action="emailOK"  method='post' onsubmit="return checkAll();" style="margin-top:17%;border-radius: 4px;border: 2px solid rgba(100, 137, 206, 0.72);background-color: rgba(100, 185, 206, 0.67);">
             <input type="hidden" name="user" value="<%=user%>" />
             <div class="fom-group">
-            <label for="userName" class="col-sm-3 col-sm-offset-right-9	 control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">重置密碼</label> 
-            <span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">已寄出驗證碼信,請至信箱查收</span>
+            <label for="userName" class="col-sm-3  control-label" style="margin-top:2px;font-size:22px;color:blue;font-weight:900;">重置密碼</label> 
+            <span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">請至信箱查收驗證碼信</span>
             </div>           
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
             <label for="user" class=" col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">驗證碼:</label>
-                <div class="col-sm-6 col-xs-4">
+                <div class="col-sm-6 col-xs-5">
                     <input type="text"  id="number"  class="form-control"  placeholder="驗證碼" onblur="checknumber()"/>
                 </div>
-                <span id="numberId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
+                <span id="numberId" class="col-sm-3 col-xs-3" style="padding-top:7px;"></span>
             </div>
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
             <label for="user" class=" col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">密碼:</label>
-                <div class="col-sm-6 col-xs-4">
+                <div class="col-sm-6 col-xs-5">
                     <input type="password"  name="passwd" id="passwd"  class="form-control"  placeholder="新密碼" onblur="checkPass()"/>
                 </div>
-                <span id="passwdId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
+                <span id="passwdId" class="col-sm-3 col-xs-3" style="padding-top:7px;"></span>
             </div>
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
             <label for="user" class=" col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">確認密碼:</label>
-                <div class="col-sm-6 col-xs-4">
+                <div class="col-sm-6 col-xs-5">
                     <input type="password" id="ckpasswd"  class="form-control"  placeholder="確認新密碼" onblur="doubleCheck()"/>
                 </div>
-                <span id="ckId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
+                <span id="ckId" class="col-sm-3 col-xs-3" style="padding-top:7px;"></span>
             </div>      
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9 col-xs-offset-4 col-xs-8">
@@ -233,17 +234,17 @@
 </body>
 <script type="text/javascript">
 function checknumber(){
-	var inputNode = document.getElementById("nmber");
+	var inputNode = document.getElementById("number");
 	var spanNode = document.getElementById("numberId");	
 	var content  = inputNode.value;	
-	if(content==<%=number%>){
+	if(content=='<%=number%>'){
 		//符合规则
 		spanNode.innerHTML = "✔ ok".fontcolor("green");
 		
 		return true;
 	}else{
 		//不符合规则
-		spanNode.innerHTML ="請重新輸入".fontcolor("red");		
+		spanNode.innerHTML ="輸入錯誤".fontcolor("red");		
 		return false;
 	}	
 }
@@ -259,7 +260,7 @@ function checkPass(){
 		return true;
 	}else{
 		//不符合规则
-		spanNode.innerHTML ="請重新輸入".fontcolor("red");		
+		spanNode.innerHTML ="格式錯誤".fontcolor("red");		
 		return false;
 	}	
 }
@@ -273,7 +274,7 @@ function doubleCheck(){
 		return true;
 	}else{
 		//不符合规则
-		spanNode.innerHTML = "請重新確認".fontcolor("red");		
+		spanNode.innerHTML = "請再確認".fontcolor("red");		
 		return false;
 	}
 }

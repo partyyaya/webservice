@@ -19,6 +19,15 @@
 <title>地震查詢</title>
 
 <style>
+.loading{ 
+ background:#FC0606; /*設置進度條的顏色*/ 
+ height:2px; /*設置進度條的高度*/ 
+ position:fixed; /*設定進度條跟隨屏幕滾動*/ 
+ top:0; /*將進度條固定在頁面頂部*/ 
+ z-index:99999; /*提高進度條的優先層級，避免被其他層遮擋*/ 
+ 
+}
+
 .list-group-item{
     background-color:#000;
 	border:none;
@@ -279,6 +288,7 @@ function switches(a,i){
 </head>
 
 <body onLoad="showTime()">
+<div class="loading"></div>
 <%
 	String user=(String)session.getAttribute("user");
 	String authority=(String)session.getAttribute("authority");
@@ -300,6 +310,11 @@ function switches(a,i){
 		System.out.println(e);
 	}		
 %>
+<script type="text/javascript"> 
+			 $('.loading').animate({'width':'30%'},100); 
+			 //第一個進度節點 
+</script> 
+
 <div class="container-filed">
 	<div class="row">
         <div class="col-xs-12">
@@ -330,6 +345,12 @@ function switches(a,i){
 				</ul>
 			</div>
         </div>
+        
+        <script type="text/javascript"> 
+			 $('.loading').animate({'width':'70%'},100); 
+			 //第一個進度節點 
+		</script> 
+        
         <div class="col-xs-12 col-sm-12" style="height:100vh">	
         	<div class="list-group col-sm-2 hidden-xs">
         		<a href="getData.jsp" class="list-group-item ">地震查詢</a>
@@ -384,5 +405,11 @@ function switches(a,i){
 	</div>
 </div>
 </body>
+<script type="text/javascript"> 
+		 $('.loading').animate({'width':'100%'},100); 
+		 $(document).ready(function(){ 
+			 $('.loading').fadeOut();  
+			});
+	</script> 
 </html>
 

@@ -198,21 +198,21 @@
             <%if(nothing!=null){%><span style="margin-top:15px;font-size:15px;color:red;font-weight:900;display:inline-block;">帳號或信箱錯誤</span><%} %>
             </div>           
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:10px;display:inline-block;">
-            <label for="user" class=" col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">帳號:</label>
-                <div class="col-sm-6 col-xs-4">
+            <label for="user" class=" col-sm-3 col-xs-3 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">帳號:</label>
+                <div class="col-sm-6 col-xs-5">
                     <input type="text"  name="user"  class="form-control"  placeholder="註冊的帳號" />
                 </div>
                 <span id="userId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
             </div>
             <div class="col-sm-12 col-xs-12 form-group" style="margin-top:5px;display:inline-block;">
-            <label for="passwd" class="col-sm-3 col-xs-4 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">信箱:</label>
-                <div class="col-sm-6 col-xs-4">
+            <label for="passwd" class="col-sm-3 col-xs-3 control-label" style="color:rgba(35, 20, 235, 0.82);font-size:15px;">信箱:</label>
+                <div class="col-sm-6 col-xs-5">
                     <input type="text" name="email" class="form-control" placeholder="註冊的信箱"/>
                 </div>
                 <span id="passwdId" class="col-sm-3 col-xs-4" style="padding-top:7px;"></span>
             </div>        
             <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9 col-xs-offset-4 col-xs-8">
+                <div class="col-sm-offset-3 col-sm-9 col-xs-offset-3 col-xs-9">
                     <input type="submit" class="btn btn-info" style="color:blue;font-weight: 900;" value="確認送出"/>
                     <button  type="button" class="btn btn-info" style="color:blue;font-weight: 900;" onclick="javascript:location.href='login.jsp'">回登入頁面</button>
                 </div>

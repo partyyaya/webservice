@@ -441,7 +441,7 @@ $(document).ready(function(){
 				
 				<script type="text/javascript">
 			     $('.loading').animate({'width':'80%'},100);
-			</script>
+				</script>
 			<div style="font-size:10px;font-weight:bold;text-align:center;">總共符合:<%=much-1%>筆資料</div>
         	</div>
         </div>
